@@ -866,6 +866,7 @@ export interface ApiProductProduct extends Schema.CollectionType {
         number
       > &
       Attribute.DefaultTo<0>;
+    Reviews: Attribute.Component<'components.reviews', true>;
     createdAt: Attribute.DateTime;
     updatedAt: Attribute.DateTime;
     createdBy: Attribute.Relation<

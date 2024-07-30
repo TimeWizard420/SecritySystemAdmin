@@ -1,0 +1,22 @@
+{
+  "collectionName": "components_components_reviews",
+  "info": {
+    "displayName": "Reviews"
+  },
+  "options": {},
+  "attributes": {
+    "Name": {
+      "type": "string",
+      "required": true
+    },
+    "ReviewText": {
+      "type": "text"
+    },
+    "AggregateScore": {
+      "type": "decimal"
+    },
+    "ReviewPostedAt": {
+      "type": "datetime"
+    }
+  }
+}
