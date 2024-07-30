@@ -49,19 +49,26 @@
       "mappedBy": "product"
     },
     "image": {
+      "type": "media",
+      "multiple": false,
+      "required": false,
       "allowedTypes": [
         "images"
-      ],
-      "type": "media",
-      "multiple": false
+      ]
     },
     "gallery": {
+      "type": "media",
+      "multiple": true,
+      "required": false,
       "allowedTypes": [
         "images",
         "videos"
-      ],
-      "type": "media",
-      "multiple": true
+      ]
+    },
+    "Quantity": {
+      "type": "integer",
+      "default": 0,
+      "min": 0
     }
   }
 }

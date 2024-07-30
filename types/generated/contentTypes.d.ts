@@ -858,6 +858,14 @@ export interface ApiProductProduct extends Schema.CollectionType {
     >;
     image: Attribute.Media<'images'>;
     gallery: Attribute.Media<'images' | 'videos', true>;
+    Quantity: Attribute.Integer &
+      Attribute.SetMinMax<
+        {
+          min: 0;
+        },
+        number
+      > &
+      Attribute.DefaultTo<0>;
     createdAt: Attribute.DateTime;
     updatedAt: Attribute.DateTime;
     createdBy: Attribute.Relation<
@@ -882,6 +890,7 @@ export interface ApiProductAttributeProductAttribute
     singularName: 'product-attribute';
     pluralName: 'product-attributes';
     displayName: 'ProductAttributes';
+    description: '';
   };
   options: {
     draftAndPublish: false;
@@ -894,6 +903,7 @@ export interface ApiProductAttributeProductAttribute
       'manyToOne',
       'api::product.product'
     >;
+    Description: Attribute.String & Attribute.Required;
     createdAt: Attribute.DateTime;
     updatedAt: Attribute.DateTime;
     createdBy: Attribute.Relation<
@@ -904,6 +914,80 @@ export interface ApiProductAttributeProductAttribute
       Attribute.Private;
     updatedBy: Attribute.Relation<
       'api::product-attribute.product-attribute',
+      'oneToOne',
+      'admin::user'
+    > &
+      Attribute.Private;
+  };
+}
+
+export interface ApiReviewReview extends Schema.CollectionType {
+  collectionName: 'reviews';
+  info: {
+    singularName: 'review';
+    pluralName: 'reviews';
+    displayName: 'Reviews';
+    description: '';
+  };
+  options: {
+    draftAndPublish: true;
+  };
+  attributes: {
+    UUID: Attribute.UID & Attribute.Required & Attribute.Private;
+    Title: Attribute.String & Attribute.Required;
+    Review: Attribute.Text & Attribute.Required;
+    Review_score: Attribute.Float &
+      Attribute.Required &
+      Attribute.SetMinMax<
+        {
+          min: 0;
+        },
+        number
+      >;
+    Usability_rating: Attribute.Float &
+      Attribute.Required &
+      Attribute.SetMinMax<
+        {
+          min: 0;
+        },
+        number
+      >;
+    Installation_rating: Attribute.Float &
+      Attribute.Required &
+      Attribute.SetMinMax<
+        {
+          min: 0;
+        },
+        number
+      >;
+    features_rating: Attribute.Float &
+      Attribute.Required &
+      Attribute.SetMinMax<
+        {
+          min: 0;
+        },
+        number
+      >;
+    accessories_rating: Attribute.Float &
+      Attribute.Required &
+      Attribute.SetMinMax<
+        {
+          min: 0;
+        },
+        number
+      >;
+    product_id: Attribute.BigInteger & Attribute.Required & Attribute.Unique;
+    createdAt: Attribute.DateTime;
+    updatedAt: Attribute.DateTime;
+    publishedAt: Attribute.DateTime;
+    createdBy: Attribute.Relation<
+      'api::review.review',
+      'oneToOne',
+      'admin::user'
+    > &
+      Attribute.Private;
+    updatedBy: Attribute.Relation<
+      'api::review.review',
       'oneToOne',
       'admin::user'
     > &
@@ -932,6 +1016,7 @@ declare module '@strapi/types' {
       'api::brand.brand': ApiBrandBrand;
       'api::product.product': ApiProductProduct;
       'api::product-attribute.product-attribute': ApiProductAttributeProductAttribute;
+      'api::review.review': ApiReviewReview;
     }
   }
 }

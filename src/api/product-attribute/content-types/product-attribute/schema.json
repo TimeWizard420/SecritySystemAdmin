@@ -4,7 +4,8 @@
   "info": {
     "singularName": "product-attribute",
     "pluralName": "product-attributes",
-    "displayName": "ProductAttributes"
+    "displayName": "ProductAttributes",
+    "description": ""
   },
   "options": {
     "draftAndPublish": false
@@ -24,6 +25,10 @@
       "relation": "manyToOne",
       "target": "api::product.product",
       "inversedBy": "product_attributes"
+    },
+    "Description": {
+      "type": "string",
+      "required": true
     }
   }
 }
