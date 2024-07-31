@@ -1,0 +1,50 @@
+{
+  "kind": "collectionType",
+  "collectionName": "form_submissions",
+  "info": {
+    "singularName": "form-submission",
+    "pluralName": "form-submissions",
+    "displayName": "FormSubmissions",
+    "description": ""
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "title": {
+      "type": "string",
+      "required": true
+    },
+    "firstName": {
+      "type": "string",
+      "required": true
+    },
+    "lastName": {
+      "type": "string",
+      "required": true
+    },
+    "preferences": {
+      "type": "string"
+    },
+    "bedrooms": {
+      "type": "integer",
+      "default": 0,
+      "required": true
+    },
+    "windows": {
+      "type": "integer",
+      "required": true,
+      "default": 0
+    },
+    "gardern": {
+      "type": "boolean"
+    },
+    "budget": {
+      "type": "decimal"
+    },
+    "brands": {
+      "type": "string"
+    }
+  }
+}

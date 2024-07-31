@@ -4,7 +4,7 @@
   "info": {
     "singularName": "brand",
     "pluralName": "brands",
-    "displayName": "Brands",
+    "displayName": "brands",
     "description": ""
   },
   "options": {
@@ -12,16 +12,16 @@
   },
   "pluginOptions": {},
   "attributes": {
-    "Name": {
+    "name": {
       "type": "string",
       "required": true,
       "unique": true
     },
-    "Description": {
+    "description": {
       "type": "richtext",
       "minLength": 50
     },
-    "Website": {
+    "website": {
       "type": "string",
       "unique": false
     },
@@ -30,6 +30,11 @@
       "relation": "oneToMany",
       "target": "api::product.product",
       "mappedBy": "brand"
+    },
+    "review": {
+      "type": "component",
+      "repeatable": true,
+      "component": "brand-componenets.brand-reviews"
     }
   }
 }

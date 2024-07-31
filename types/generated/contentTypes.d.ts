@@ -793,24 +793,25 @@ export interface ApiBrandBrand extends Schema.CollectionType {
   info: {
     singularName: 'brand';
     pluralName: 'brands';
-    displayName: 'Brands';
+    displayName: 'brands';
     description: '';
   };
   options: {
     draftAndPublish: false;
   };
   attributes: {
-    Name: Attribute.String & Attribute.Required & Attribute.Unique;
-    Description: Attribute.RichText &
+    name: Attribute.String & Attribute.Required & Attribute.Unique;
+    description: Attribute.RichText &
       Attribute.SetMinMaxLength<{
         minLength: 50;
       }>;
-    Website: Attribute.String;
+    website: Attribute.String;
     products: Attribute.Relation<
       'api::brand.brand',
       'oneToMany',
       'api::product.product'
     >;
+    review: Attribute.Component<'brand-componenets.brand-reviews', true>;
     createdAt: Attribute.DateTime;
     updatedAt: Attribute.DateTime;
     createdBy: Attribute.Relation<
@@ -821,6 +822,45 @@ export interface ApiBrandBrand extends Schema.CollectionType {
       Attribute.Private;
     updatedBy: Attribute.Relation<
       'api::brand.brand',
+      'oneToOne',
+      'admin::user'
+    > &
+      Attribute.Private;
+  };
+}
+
+export interface ApiFormSubmissionFormSubmission extends Schema.CollectionType {
+  collectionName: 'form_submissions';
+  info: {
+    singularName: 'form-submission';
+    pluralName: 'form-submissions';
+    displayName: 'FormSubmissions';
+    description: '';
+  };
+  options: {
+    draftAndPublish: true;
+  };
+  attributes: {
+    title: Attribute.String & Attribute.Required;
+    firstName: Attribute.String & Attribute.Required;
+    lastName: Attribute.String & Attribute.Required;
+    preferences: Attribute.String;
+    bedrooms: Attribute.Integer & Attribute.Required & Attribute.DefaultTo<0>;
+    windows: Attribute.Integer & Attribute.Required & Attribute.DefaultTo<0>;
+    gardern: Attribute.Boolean;
+    budget: Attribute.Decimal;
+    brands: Attribute.String;
+    createdAt: Attribute.DateTime;
+    updatedAt: Attribute.DateTime;
+    publishedAt: Attribute.DateTime;
+    createdBy: Attribute.Relation<
+      'api::form-submission.form-submission',
+      'oneToOne',
+      'admin::user'
+    > &
+      Attribute.Private;
+    updatedBy: Attribute.Relation<
+      'api::form-submission.form-submission',
       'oneToOne',
       'admin::user'
     > &
@@ -833,32 +873,27 @@ export interface ApiProductProduct extends Schema.CollectionType {
   info: {
     singularName: 'product';
     pluralName: 'products';
-    displayName: 'Products';
+    displayName: 'products';
     description: '';
   };
   options: {
     draftAndPublish: false;
   };
   attributes: {
-    Name: Attribute.String & Attribute.Required;
-    Description: Attribute.RichText;
-    Price: Attribute.Integer & Attribute.Required;
+    name: Attribute.String & Attribute.Required;
+    description: Attribute.RichText;
+    price: Attribute.Integer & Attribute.Required;
     brand: Attribute.Relation<
       'api::product.product',
       'manyToOne',
       'api::brand.brand'
     >;
-    Summary: Attribute.Text & Attribute.Required;
-    AggregateRating: Attribute.Decimal & Attribute.DefaultTo<0>;
+    summary: Attribute.Text & Attribute.Required;
+    aggregateRating: Attribute.Decimal & Attribute.DefaultTo<0>;
     SKU: Attribute.String & Attribute.Required & Attribute.Unique;
-    product_attributes: Attribute.Relation<
-      'api::product.product',
-      'oneToMany',
-      'api::product-attribute.product-attribute'
-    >;
     image: Attribute.Media<'images'>;
     gallery: Attribute.Media<'images' | 'videos', true>;
-    Quantity: Attribute.Integer &
+    quantity: Attribute.Integer &
       Attribute.SetMinMax<
         {
           min: 0;
@@ -866,7 +901,9 @@ export interface ApiProductProduct extends Schema.CollectionType {
         number
       > &
       Attribute.DefaultTo<0>;
-    Reviews: Attribute.Component<'components.reviews', true>;
+    reviews: Attribute.Component<'components.reviews', true>;
+    attributes: Attribute.Component<'components.product-attributes', true>;
+    features: Attribute.Component<'components.product-feature', true>;
     createdAt: Attribute.DateTime;
     updatedAt: Attribute.DateTime;
     createdBy: Attribute.Relation<
@@ -877,118 +914,6 @@ export interface ApiProductProduct extends Schema.CollectionType {
       Attribute.Private;
     updatedBy: Attribute.Relation<
       'api::product.product',
-      'oneToOne',
-      'admin::user'
-    > &
-      Attribute.Private;
-  };
-}
-
-export interface ApiProductAttributeProductAttribute
-  extends Schema.CollectionType {
-  collectionName: 'product_attributes';
-  info: {
-    singularName: 'product-attribute';
-    pluralName: 'product-attributes';
-    displayName: 'ProductAttributes';
-    description: '';
-  };
-  options: {
-    draftAndPublish: false;
-  };
-  attributes: {
-    Name: Attribute.String & Attribute.Required;
-    Value: Attribute.String & Attribute.Required;
-    product: Attribute.Relation<
-      'api::product-attribute.product-attribute',
-      'manyToOne',
-      'api::product.product'
-    >;
-    Description: Attribute.String & Attribute.Required;
-    createdAt: Attribute.DateTime;
-    updatedAt: Attribute.DateTime;
-    createdBy: Attribute.Relation<
-      'api::product-attribute.product-attribute',
-      'oneToOne',
-      'admin::user'
-    > &
-      Attribute.Private;
-    updatedBy: Attribute.Relation<
-      'api::product-attribute.product-attribute',
-      'oneToOne',
-      'admin::user'
-    > &
-      Attribute.Private;
-  };
-}
-
-export interface ApiReviewReview extends Schema.CollectionType {
-  collectionName: 'reviews';
-  info: {
-    singularName: 'review';
-    pluralName: 'reviews';
-    displayName: 'Reviews';
-    description: '';
-  };
-  options: {
-    draftAndPublish: true;
-  };
-  attributes: {
-    UUID: Attribute.UID & Attribute.Required & Attribute.Private;
-    Title: Attribute.String & Attribute.Required;
-    Review: Attribute.Text & Attribute.Required;
-    Review_score: Attribute.Float &
-      Attribute.Required &
-      Attribute.SetMinMax<
-        {
-          min: 0;
-        },
-        number
-      >;
-    Usability_rating: Attribute.Float &
-      Attribute.Required &
-      Attribute.SetMinMax<
-        {
-          min: 0;
-        },
-        number
-      >;
-    Installation_rating: Attribute.Float &
-      Attribute.Required &
-      Attribute.SetMinMax<
-        {
-          min: 0;
-        },
-        number
-      >;
-    features_rating: Attribute.Float &
-      Attribute.Required &
-      Attribute.SetMinMax<
-        {
-          min: 0;
-        },
-        number
-      >;
-    accessories_rating: Attribute.Float &
-      Attribute.Required &
-      Attribute.SetMinMax<
-        {
-          min: 0;
-        },
-        number
-      >;
-    product_id: Attribute.BigInteger & Attribute.Required & Attribute.Unique;
-    createdAt: Attribute.DateTime;
-    updatedAt: Attribute.DateTime;
-    publishedAt: Attribute.DateTime;
-    createdBy: Attribute.Relation<
-      'api::review.review',
-      'oneToOne',
-      'admin::user'
-    > &
-      Attribute.Private;
-    updatedBy: Attribute.Relation<
-      'api::review.review',
       'oneToOne',
       'admin::user'
     > &
@@ -1015,9 +940,8 @@ declare module '@strapi/types' {
       'plugin::users-permissions.user': PluginUsersPermissionsUser;
       'plugin::i18n.locale': PluginI18NLocale;
       'api::brand.brand': ApiBrandBrand;
+      'api::form-submission.form-submission': ApiFormSubmissionFormSubmission;
       'api::product.product': ApiProductProduct;
-      'api::product-attribute.product-attribute': ApiProductAttributeProductAttribute;
-      'api::review.review': ApiReviewReview;
     }
   }
 }

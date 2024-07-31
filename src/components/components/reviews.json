@@ -1,22 +1,42 @@
 {
   "collectionName": "components_components_reviews",
   "info": {
-    "displayName": "Reviews"
+    "displayName": "reviews",
+    "description": ""
   },
   "options": {},
   "attributes": {
-    "Name": {
+    "name": {
       "type": "string",
       "required": true
     },
-    "ReviewText": {
+    "reviewText": {
       "type": "text"
     },
-    "AggregateScore": {
+    "aggregateScore": {
       "type": "decimal"
     },
-    "ReviewPostedAt": {
+    "reviewPostedAt": {
       "type": "datetime"
+    },
+    "usabilityRating": {
+      "type": "integer"
+    },
+    "installationRating": {
+      "type": "integer"
+    },
+    "connectivityRating": {
+      "type": "integer"
+    },
+    "accessoriesRating": {
+      "type": "decimal"
+    },
+    "countryCode": {
+      "type": "string"
+    },
+    "verifiedPurchase": {
+      "type": "boolean",
+      "required": true
     }
   }
 }
