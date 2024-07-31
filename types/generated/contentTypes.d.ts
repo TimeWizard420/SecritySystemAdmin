@@ -850,7 +850,20 @@ export interface ApiBrandBrand extends Schema.CollectionType {
       'oneToMany',
       'api::product.product'
     >;
-    review: Attribute.Component<'brand-componenets.brand-reviews', true>;
+    uuid: Attribute.UID<
+      undefined,
+      undefined,
+      {
+        'disable-regenerate': true;
+      }
+    > &
+      Attribute.CustomField<
+        'plugin::strapi-advanced-uuid.uuid',
+        {
+          'disable-regenerate': true;
+        }
+      >;
+    reviews: Attribute.Component<'components.reviews', true>;
     createdAt: Attribute.DateTime;
     updatedAt: Attribute.DateTime;
     createdBy: Attribute.Relation<
@@ -883,12 +896,30 @@ export interface ApiFormSubmissionFormSubmission extends Schema.CollectionType {
     title: Attribute.String & Attribute.Required;
     firstName: Attribute.String & Attribute.Required;
     lastName: Attribute.String & Attribute.Required;
-    preferences: Attribute.String;
-    bedrooms: Attribute.Integer & Attribute.Required & Attribute.DefaultTo<0>;
-    windows: Attribute.Integer & Attribute.Required & Attribute.DefaultTo<0>;
-    gardern: Attribute.Boolean;
+    numBedrooms: Attribute.Integer &
+      Attribute.Required &
+      Attribute.DefaultTo<0>;
+    numWindows: Attribute.Integer & Attribute.Required & Attribute.DefaultTo<0>;
+    hasGarden: Attribute.Boolean;
     budget: Attribute.Decimal;
-    brands: Attribute.String;
+    brands: Attribute.Relation<
+      'api::form-submission.form-submission',
+      'oneToMany',
+      'api::brand.brand'
+    >;
+    isGroundFloor: Attribute.Boolean;
+    hasAlarm: Attribute.Boolean;
+    preferences: Attribute.JSON;
+    email: Attribute.Email;
+    phone: Attribute.String &
+      Attribute.SetMinMaxLength<{
+        maxLength: 18;
+      }>;
+    town: Attribute.String;
+    county: Attribute.String;
+    country: Attribute.String;
+    isVulnerable: Attribute.Boolean;
+    isElderly: Attribute.Boolean;
     createdAt: Attribute.DateTime;
     updatedAt: Attribute.DateTime;
     publishedAt: Attribute.DateTime;

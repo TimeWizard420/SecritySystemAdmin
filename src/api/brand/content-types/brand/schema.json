@@ -31,10 +31,17 @@
       "target": "api::product.product",
       "mappedBy": "brand"
     },
-    "review": {
+    "uuid": {
+      "type": "customField",
+      "options": {
+        "disable-regenerate": true
+      },
+      "customField": "plugin::strapi-advanced-uuid.uuid"
+    },
+    "reviews": {
       "type": "component",
       "repeatable": true,
-      "component": "brand-componenets.brand-reviews"
+      "component": "components.reviews"
     }
   }
 }

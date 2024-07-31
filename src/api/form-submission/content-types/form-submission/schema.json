@@ -24,27 +24,57 @@
       "type": "string",
       "required": true
     },
-    "preferences": {
-      "type": "string"
-    },
-    "bedrooms": {
+    "numBedrooms": {
       "type": "integer",
       "default": 0,
       "required": true
     },
-    "windows": {
+    "numWindows": {
       "type": "integer",
       "required": true,
       "default": 0
     },
-    "gardern": {
+    "hasGarden": {
       "type": "boolean"
     },
     "budget": {
       "type": "decimal"
     },
     "brands": {
+      "type": "relation",
+      "relation": "oneToMany",
+      "target": "api::brand.brand"
+    },
+    "isGroundFloor": {
+      "type": "boolean"
+    },
+    "hasAlarm": {
+      "type": "boolean"
+    },
+    "preferences": {
+      "type": "json"
+    },
+    "email": {
+      "type": "email"
+    },
+    "phone": {
+      "type": "string",
+      "maxLength": 18
+    },
+    "town": {
       "type": "string"
+    },
+    "county": {
+      "type": "string"
+    },
+    "country": {
+      "type": "string"
+    },
+    "isVulnerable": {
+      "type": "boolean"
+    },
+    "isElderly": {
+      "type": "boolean"
     }
   }
 }
